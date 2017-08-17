@@ -1,0 +1,120 @@
+* {
+    box-sizing: border-box;
+    color: white;
+}
+
+.modal-header  {
+    background-color: #202020;
+}
+
+.modal-body {
+    background-color: #f4f5f4;
+    padding: 3vmax;
+    overflow-x: auto; 
+    overflow-y:auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.modal {
+    font-style: italic;
+}
+
+body {
+    background-color: #202020;
+    overflow-x: auto; 
+    overflow-y:auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.container {
+    float:none;
+}
+
+input, label, textarea, h4, .glyphicon-log-out, .list, .list li, select, select option {
+    color: #202020;
+}
+
+input, label, textarea, select, select option {
+    font-style: italic;
+}
+
+.logo {
+    margin: 2px 5px;
+    padding: 0;
+}
+
+.page-header {
+    margin-top: 20vh;    
+}
+
+.alert {
+    text-align: center;
+}
+
+.glyphicon-plus-sign {
+    color: #80ff80;
+    cursor: pointer;
+}
+
+.glyphicon-apple {
+    color: #80ff80;
+    text-shadow: 1px 1px #202020;
+}
+
+main section {
+    display: inline;
+}
+
+.btn-default {
+    background-color: #80ff80;
+    color: black;
+}
+
+.btn-default:hover {
+    background-color: #38be38;
+}
+
+table :not .modal{
+    font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.modal-btn, .panel-btn {
+    background-color: #202020;
+}
+
+.close {
+    color: white;
+}
+
+.panel {
+    margin-top: 15vh;
+}
+
+.panel-heading {
+    font-style: italic;
+    color: white;
+    background-color: #202020;
+}
+
+.img-thumbnail {
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 7vh;
+    height: 7vh;
+    margin: 2px 5px;
+    padding: 0;
+}
+
+.img-user, .img-student {
+    background-image: url("../images/person.jpg");
+    cursor: pointer;
+}
+
+.img-course {
+    background-image: url("../images/course.jpg");
+    cursor: pointer;
+}
+
+.test {
+    color: #ff108d;
+}

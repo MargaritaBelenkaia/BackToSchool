@@ -1,0 +1,42 @@
+<main class="container col-xs-12 col-sm-12 col-md-10 col-lg-10">
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+        <h3><span class="glyphicon glyphicon-apple"></span> Add New Student Details</h3>
+        </div>
+        <div class="panel-body">
+
+            <!--THE FORM-->
+            <form ng-submit="school.registerStudent(newStudent);"> 
+                
+            <!--A SUCCESS MESSAGE-->
+            <div class="row show-hide-message" ng-show = "school.successMsg">
+                <div class="alert alert-success">{{ school.successMsg }}</div>
+            </div>
+
+            <!--AN ERROR MESSAGE-->
+            <div class="row show-hide-message" ng-show = "school.errorMsg">
+                <div class="alert alert-danger">{{ school.errorMsg }}</div>
+            </div>
+
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" class="form-control" name="name" ng-model="school.newStudent.name">
+            </div>
+            
+            <div class="form-group">
+                <label>Phone:</label>
+                <input type="text" class="form-control" name="phone" ng-model="school.newStudent.phone">
+            </div>
+
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="text" class="form-control" name="email" ng-model="school.newStudent.email">
+            </div>
+
+            <button type="submit" class="btn btn-md panel-btn">SAVE</button>
+            <button type="button" class="btn btn-md panel-btn" ng-click="school.path_school();">CLOSE</button>
+            </form>	
+        </div>
+    </div>
+</main> 	

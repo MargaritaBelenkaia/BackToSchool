@@ -1,0 +1,268 @@
+<div class="page-header">
+    <h1>Welcome to School</h1>
+</div>
+
+<main class="container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+<!--STUDENTS-->
+    <section class="info col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <h3>Students <i class="glyphicon glyphicon-plus-sign" ng-click="school.path_newStudent();"></i></h3>
+        <table class="table table-bordered col-xs-12 col-sm-12 col-md-10 col-lg-10" ng-init="school.getStudents();">
+            <tr>
+                <th>PHOTO</th>
+                <th>NAME</th>
+                <th>ACTIONS</th>
+            </tr>
+
+            <tr ng-repeat="student in school.students track by $index">
+
+                <td><img class="img-thumbnail img-student" ng-click="school.showStudent(student.id)" data-toggle="modal" data-target="#studentPicModal" ng-src="../../BackToSchool/uploads/students/{{ student.image }}" />
+                    
+<!-- UPLOAD AN IMAGE -->
+                    <div class="modal fade" id="studentPicModal" role="dialog"> 
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3><span class="glyphicon glyphicon-apple"></span> {{ school.oneStudent.name }}</h3>
+                                    <p>Choose a picture</p>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form ng-submit="school.uploadStudentImage(school.oneStudent.id, files);">
+
+                                        <!--A SUCCESS MESSAGE-->
+                                        <div class="row show-hide-message" ng-show = "school.successMsg">
+                                            <div class="alert alert-success">{{ school.successMsg }}</div>
+                                        </div>
+
+                                        <!--AN ERROR MESSAGE-->
+                                        <div class="row show-hide-message" ng-show = "school.errorMsg">
+                                            <div class="alert alert-danger">{{ school.errorMsg }}</div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label> Name: </label>
+                                            <input type="file" name="files" image-model="school.files"/>                                                 
+                                        </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-md panel-btn">SAVE</button>
+                                        <button class="btn btn-md btn-close modal-btn" data-dismiss="modal" type="button">CLOSE</button>
+                                    </div>
+
+                                    </form>
+                                </div>    
+                            </div>
+                        </div>
+                    </div> 
+                
+                </td>        
+                <td>{{ student.name }}</td>    
+                <td>
+                    <button class="btn btn-sm btn-default" ng-click="school.showStudent(student.id);" data-target="#studentDetailsModal" data-toggle="modal">SHOW</button>
+                    
+<!-- SHOW/EDIT STUDENT'S DETAILS -->
+                    <div class="modal fade" ng-show="school.loadme" id="studentDetailsModal" tabindex="-1">
+                        <div class="modal-dialog" id="modal-dialog">
+                            <div class="modal-content" id="modal-content">
+                                <div class="modal-header">
+                                    <button class="close" data-dismiss="modal">&times;</button>
+                                    <h3 class="modal-title"><i class="glyphicon glyphicon-apple"></i> Student Details</h3>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!--A SUCCESS MESSAGE-->
+                                    <div class="row show-hide-message" ng-show = "school.successMsg">
+                                        <div class="alert alert-success">{{ school.successMsg }}</div>
+                                    </div>
+
+                                    <!--AN ERROR MESSAGE-->
+                                    <div class="row show-hide-message" ng-show = "school.errorMsg">
+                                        <div class="alert alert-danger">{{ school.errorMsg }}</div>
+                                    </div>
+
+                                        <form class="form" ng-submit="school.editStudent(oneStudent);">
+
+                                            <div class="form-group">
+                                                <label> Name: </label>
+                                                <input class="form-control" type="text" name="name" ng-model="school.oneStudent.name">                                                
+                                            </div>
+                                                
+                                            <div class="form-group">
+                                                <label> Phone: </label>
+                                                <input class="form-control" type="text" name="phone" ng-model="school.oneStudent.phone">
+                                            </div>
+
+                                            <div class="form-group">    
+                                                <label> Email: </label>
+                                                <input class="form-control" type="text" name="email" ng-model="school.oneStudent.email">
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button class="btn btn-md modal-btn" type="submit">EDIT</button>
+                                                <button class="btn btn-md btn-close modal-btn" data-dismiss="modal" type="button">CLOSE</button>
+                                            </div>	
+                                        </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-sm btn-danger" ng-show="main.isAuthorized" data-toggle="modal" data-target="#deleteStudentModal" ng-click="school.showStudent(student.id);">DELETE</button>
+
+<!-- DELETE A STUDENT -->
+                    <div class="modal fade" id="deleteStudentModal" role="dialog">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h3><span class="glyphicon glyphicon-apple"></span> {{ school.oneStudent.name }}</h3>
+                                    <p>Do you wamt to delete this student?</p>
+                                </div>
+                                <div class="modal-body">
+                                    <img class="img-thumbnail img-student" ng-src="uploads/students/{{ school.oneStudent.image }}" />
+                                    <button class="btn btn-danger" ng-click="school.deleteStudent(school.oneStudent.id);">YES</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-md btn-close modal-btn" data-dismiss="modal" type="button">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>    
+            </tr>
+        </table>
+    </section>
+
+<!--COURSES-->
+     <section class="info col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <h3>Courses <i class="glyphicon glyphicon-plus-sign" ng-click="school.path_newCourse();"></i></h3>
+        <table class="table table-bordered col-xs-12 col-sm-12 col-md-10 col-lg-10" ng-init="school.getCourses();">
+            <tr>
+                <th>PICTURE</th>
+                <th>NAME</th>
+                <th>ACTIONS</th>
+            </tr>
+
+            <tr ng-repeat="course in school.courses track by $index">
+
+<!-- UPLOAD AN IMAGE -->
+                <td><img class="img-thumbnail img-course" ng-click="school.showCourse(course.id)" data-toggle="modal" data-target="#coursePicModal" ng-src="../../BackToSchool/uploads/courses/{{ course.image }}" />
+                
+                <div class="modal fade" id="coursePicModal" role="dialog"> 
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h3><span class="glyphicon glyphicon-apple"></span> {{ school.oneCourse.name }}</h3>
+                                <p>Choose a picture</p>
+                            </div>
+                            <div class="modal-body">
+
+                                <form ng-submit="school.uploadCourseImage(school.oneCourse.id, files);">
+
+                                    <!--A SUCCESS MESSAGE-->
+                                    <div class="row show-hide-message" ng-show = "school.successMsg">
+                                        <div class="alert alert-success">{{ school.successMsg }}</div>
+                                    </div>
+
+                                    <!--AN ERROR MESSAGE-->
+                                    <div class="row show-hide-message" ng-show = "school.errorMsg">
+                                        <div class="alert alert-danger">{{ school.errorMsg }}</div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> Name: </label>
+                                        <input type="file" name="files" image-model="school.files"/>                                                 
+                                    </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-md panel-btn">SAVE</button>
+                                    <button class="btn btn-md btn-close modal-btn" data-dismiss="modal" type="button">CLOSE</button>
+                                </div>
+
+                                </form>
+                            </div>    
+                        </div>
+                    </div>
+                </div> 
+                
+                </td>        
+                <td>{{ course.name }}</td>
+
+<!-- SHOW/EDIT COURSE DETAILS -->
+                <td>
+                    <button class="btn btn-sm btn-default" ng-click="school.showCourse(course.id);" data-target="#courseDetailsModal" data-toggle="modal">SHOW</button>
+
+                    <div class="modal fade" ng-show="school.loadme" id="courseDetailsModal" tabindex="-1">
+                        <div class="modal-dialog" id="modal-dialog">
+                            <div class="modal-content" id="modal-content">
+                                <div class="modal-header">
+                                    <button class="close" data-dismiss="modal">&times;</button>
+                                    <h3 class="modal-title"><i class="glyphicon glyphicon-apple"></i> Course Details</h3>
+                                </div>
+                                <div class="modal-body">
+
+
+                                    <div class="row show-hide-message" ng-show = "school.successMsg">
+                                        <div class="alert alert-success">{{ school.successMsg }}</div>
+                                    </div>
+
+
+                                    <div class="row show-hide-message" ng-show = "school.errorMsg">
+                                        <div class="alert alert-danger">{{ school.errorMsg }}</div>
+                                    </div>
+
+                                        <form class="form" ng-submit="school.editCourse(course.id);">
+
+                                            <div class="form-group">
+                                                <label> Name: </label>
+                                                <input class="form-control" type="text" name="name" ng-model="school.oneCourse.name">                                                
+                                            </div>
+                                                
+                                            <div class="form-group">
+                                                <label>Description:</label>
+                                                <textarea type="text" class="form-control" name="description" ng-model="school.oneCourse.description"></textarea>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button class="btn btn-md modal-btn" type="submit" ng-show="main.isAuthorized">EDIT</button>
+                                                <button class="btn btn-md btn-close modal-btn" data-dismiss="modal" type="button">CLOSE</button>
+                                            </div>	
+                                        </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<!-- DELETE COURSE -->
+                    <button class="btn btn-sm btn-danger" ng-show="main.isAuthorized" data-toggle="modal" data-target="#deleteCourseModal" ng-click="school.showCourse(course.id);">DELETE</button>
+
+                    <div class="modal fade" id="deleteCourseModal" role="dialog">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h3><span class="glyphicon glyphicon-apple"></span> {{ school.oneCourse.name }}</h3>
+                                    <p>Do you wamt to delete this course?</p>
+                                </div>
+                                <div class="modal-body">
+                                    <img class="img-thumbnail img-course" ng-src="uploads/courses/{{ school.oneCourse.image }}" />
+                                    <button class="btn btn-danger" ng-click="school.deleteCourse(school.oneCourse.id);">YES</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-md btn-close modal-btn" data-dismiss="modal" type="button">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>    
+            </tr>
+        </table>
+    </section> 
+
+</main>

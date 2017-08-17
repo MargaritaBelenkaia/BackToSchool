@@ -1,0 +1,46 @@
+<main class="container col-xs-12 col-sm-12 col-md-8 col-lg-8" >   
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><i class="glyphicon glyphicon-apple"></i>  USER LOGIN</h4>
+        </div>
+
+        <div class="panel-body">
+            <form name="loginForm" class="form" ng-submit="main.login(loginData, loginForm.$valid);" novalidate>
+
+                <!--A SUCCESS MESSAGE-->
+                <div class="row show-hide-message" ng-show = "main.successMsg">
+                    <div class="alert alert-success">{{ main.successMsg }}</div>
+                </div>
+                <!--AN ERROR MESSAGE-->
+                <div class="row show-hide-message" ng-show="main.errorMsg">
+                    <div class="alert alert-danger">{{ main.errorMsg }}</div>
+                </div>
+        
+                <div class="form-group">
+                <label>Email : </label>
+                <input class="form-control" type="text" name="email" placeholder="some@companyname.com" ng-model="main.loginData.email"
+                ng-pattern="/[A-Z0-9a-z._%+-]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/" required>  
+                <p class="test" ng-show="(!loginForm.email.$pristine && loginForm.email.$error.required) 
+                || (loginForm.$submitted && loginForm.email.$error.required)">This field is required</p>
+                <p class="test" ng-show="!loginForm.email.$pristine && loginForm.email.$error.pattern">
+                Please make sure it's a valid email address</p>                
+                </div>
+
+                <div class="form-group">
+                <label> Password: </label>
+                <input class="form-control" type="password" name="pwd" placeholder="Password" ng-model="main.loginData.pwd" required>
+                <p class="test" ng-show="(!loginForm.pwd.$pristine && loginForm.pwd.$error.required) 
+                || (loginForm.$submitted && loginForm.pwd.$error.required)">This field is required</p>
+                </div>
+
+                <button class="btn btn-success btn-block btn-md" type="submit">
+                    <i class="glyphicon glyphicon-log-in"></i>
+                    Log In
+                    </button>
+            </form>
+
+        </div>
+    </div>
+    
+</main>

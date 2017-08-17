@@ -1,0 +1,154 @@
+<div class="page-header">
+    <h1>
+        Administrators
+        <i class="glyphicon glyphicon-plus-sign" ng-click="users.path_newUser();"></i>
+    </h1>
+</div>
+
+<table class="table table-bordered col-xs-12 col-sm-12 col-md-10 col-lg-10" ng-init="users.getUsers();">
+    <tr>
+        <th>PHOTO</th>
+        <th>NAME</th>
+        <th>ROLE</th>
+        <th>ACTIONS</th>
+    </tr>
+
+    <tr ng-repeat="user in users.users track by $index">
+
+<!-- UPLOAD AN IMAGE -->
+        <td><img class="img-thumbnail img-user"  ng-click="users.showUser(user.id, user.permission)" data-toggle="modal" data-target="#userPicModal" ng-src="../../BackToSchool/uploads/users/{{ user.image }}" />
+            <div class="modal fade" id="userPicModal" role="dialog"> 
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3><span class="glyphicon glyphicon-apple"></span> {{ users.oneUser.name }}</h3>
+                            <p>Choose a picture</p>
+                        </div>
+                        <div class="modal-body">
+
+                            <form ng-submit="users.uploadUserImage(users.oneUser.id, files);">
+
+                                <!--A SUCCESS MESSAGE-->
+                                <div class="row show-hide-message" ng-show = "users.successMsg">
+                                    <div class="alert alert-success">{{ users.successMsg }}</div>
+                                </div>
+
+                                <!--AN ERROR MESSAGE-->
+                                <div class="row show-hide-message" ng-show = "users.errorMsg">
+                                    <div class="alert alert-danger">{{ users.errorMsg }}</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label> Name: </label>
+                                    <input type="file" name="files" image-model="users.files" ng-disabled="!users.isNotOwner && main.isNotOwner"/>                                                 
+                                </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-md panel-btn">SAVE</button>
+                                <button class="btn btn-md btn-close modal-btn" data-dismiss="modal" type="button">CLOSE</button>
+                            </div>
+
+                            </form>
+                        </div>    
+                    </div>
+                </div>
+            </div> 
+        </td>    
+        <td>{{ user.name }}</td>    
+        <td>{{ user.permission }}</td>    
+        <td>
+            <button class="btn btn-sm btn-default" ng-click="users.showUser(user.id, user.permission)" data-target="#userDetailsModal" data-toggle="modal">SHOW</button>
+
+<!-- SHOW/EDIT USER DETAILS -->
+            <div class="modal fade" ng-show="users.loadme" id="userDetailsModal" tabindex="-1">
+                <div class="modal-dialog" id="modal-dialog">
+                    <div class="modal-content" id="modal-content">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title"><i class="glyphicon glyphicon-apple"></i> User Details</h3>
+                        </div>
+                        <div class="modal-body">
+
+                            <!--A SUCCESS MESSAGE-->
+                            <div class="row show-hide-message" ng-show = "users.successMsg">
+                                <div class="alert alert-success">{{ users.successMsg }}</div>
+                            </div>
+
+                            <!--AN ERROR MESSAGE-->
+                            <div class="row show-hide-message" ng-show = "users.errorMsg">
+                                <div class="alert alert-danger">{{ users.errorMsg }}</div>
+                            </div>
+
+                            <!-- THE FORM -->
+                            <form class="form" ng-submit="users.editUser(oneUser);">
+
+                                <div class="form-group">
+                                    <label> Name: </label>
+                                    <input class="form-control" type="text" name="name" ng-model="users.oneUser.name" />                                                
+                                </div>
+
+                                <div class="form-group">    
+                                    <label>Role: </label>
+                                    <select class="form-control" ng-model="users.oneUser.permission" ng-init="value='users.oneUser.permission'" ng-disabled="users.isNotOwner">
+                                        <option value="owner" disabled>owner</option>
+                                        <option value="admin">admin</option>
+                                        <option value="sales">sales</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label> Phone: </label>
+                                    <input class="form-control" type="text" name="phone" ng-model="users.oneUser.phone">
+                                </div>
+
+                                <div class="form-group">    
+                                    <label> Email: </label>
+                                    <input class="form-control" type="text" name="email" ng-model="users.oneUser.email">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label> Password: </label>
+                                    <input class="form-control" type="password" name="pwd" ng-model="users.oneUser.pwd">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn btn-md modal-btn" type="submit">EDIT</button>
+                                    <button class="btn btn-md btn-close modal-btn" data-dismiss="modal" type="button">CLOSE</button>
+                                </div>	
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!-- DELETE A USER -->
+            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteUserModal" ng-click="users.showUser(user.id, user.permission);">DELETE</button>
+
+            <div class="modal fade" id="deleteUserModal" role="dialog">
+            <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3><span class="glyphicon glyphicon-apple"></span> {{ users.oneUser.name }}</h3>
+                    <p>Do you wamt to delete this user?</p>
+                </div>
+
+                <div class="modal-body">
+                    <img class="img-thumbnail img-user" ng-src="{{  }}" />
+                    <button class="btn btn-danger" ng-click="users.deleteUser(users.oneUser.id);"  ng-disabled="users.isNotOwner">YES</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-md btn-close modal-btn" data-dismiss="modal" type="button">CLOSE</button>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            </div>
+        </td>    
+
+    </tr>
+</table>
